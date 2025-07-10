@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, 
   Sparkles, 
@@ -14,14 +15,15 @@ import {
   Users, 
   Settings,
   Crown,
-  Plus
+  Plus,
+  Brain
 } from "lucide-react";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { icon: Brain, label: "AI Workspace", path: "/ai-workspace" },
   { icon: Sparkles, label: "Prompt Builder", path: "/prompt-builder" },
   { icon: Palette, label: "Brand Style", path: "/brand-style" },
-  { icon: Sparkles, label: "Content Generator", path: "/content-generator" },
   { icon: Search, label: "SEO Optimizer", path: "/seo-optimizer" },
   { icon: Image, label: "Image & Video", path: "/image-video" },
   { icon: Mic, label: "Voiceover", path: "/voiceover" },
@@ -32,6 +34,8 @@ const menuItems = [
 
 export function Sidebar() {
   const { user, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="flex h-screen w-64 flex-col bg-gradient-card border-r border-border">
@@ -50,19 +54,23 @@ export function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
-        {menuItems.map((item, index) => (
-          <Button
-            key={index}
-            variant={index === 0 ? "default" : "ghost"}
-            className={cn(
-              "w-full justify-start gap-3 h-10",
-              index === 0 && "bg-primary text-primary-foreground shadow-glow"
-            )}
-          >
-            <item.icon className="h-4 w-4" />
-            <span className="font-medium">{item.label}</span>
-          </Button>
-        ))}
+        {menuItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Button
+              key={index}
+              variant={isActive ? "default" : "ghost"}
+              className={cn(
+                "w-full justify-start gap-3 h-10",
+                isActive && "bg-primary text-primary-foreground shadow-glow"
+              )}
+              onClick={() => navigate(item.path)}
+            >
+              <item.icon className="h-4 w-4" />
+              <span className="font-medium">{item.label}</span>
+            </Button>
+          );
+        })}
       </nav>
 
       {/* Upgrade Section */}
