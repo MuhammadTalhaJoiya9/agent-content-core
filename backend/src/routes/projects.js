@@ -1,6 +1,6 @@
 const express = require('express');
 const { auth } = require('../middleware/auth');
-const db = require('../database/db');
+const db = require('../database/mysql-db');
 const router = express.Router();
 
 // Get all projects for user
