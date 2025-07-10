@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS projects (
   workspace_id VARCHAR(36) NOT NULL,
   title VARCHAR(255) NOT NULL,
   content_type ENUM('article', 'social_post', 'video_script', 'email', 'seo_content') NOT NULL,
-  content LONGTEXT DEFAULT '',
+  content LONGTEXT,
   word_count INT DEFAULT 0,
   status ENUM('draft', 'in_progress', 'completed') DEFAULT 'draft',
   metadata JSON,
