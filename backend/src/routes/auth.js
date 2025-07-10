@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { auth } = require('../middleware/auth');
-const db = require('../database/db');
+const db = require('../database/mysql-db');
 const router = express.Router();
 
 // Generate JWT token

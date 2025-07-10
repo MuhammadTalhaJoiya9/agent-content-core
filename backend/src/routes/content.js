@@ -1,7 +1,7 @@
 const express = require('express');
 const OpenAI = require('openai');
 const { auth, optionalAuth } = require('../middleware/auth');
-const db = require('../database/db');
+const db = require('../database/mysql-db');
 const router = express.Router();
 
 // Initialize OpenAI

@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+// Import database
+const { testConnection } = require('./database/mysql-config');
+const { runMigrations } = require('./database/migrate');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -47,7 +51,29 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`Frontend should connect to: http://localhost:${PORT}/api`);
-});
+// Initialize database and start server
+async function startServer() {
+  try {
+    // Test database connection
+    const isConnected = await testConnection();
+    if (!isConnected) {
+      console.error('❌ Failed to connect to database. Please check your .env configuration.');
+      process.exit(1);
+    }
+
+    // Run migrations
+    await runMigrations();
+
+    // Start server
+    app.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log(`📱 Frontend should connect to: http://localhost:${PORT}/api`);
+      console.log(`🗄️  MySQL Database connected and migrations completed`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();
