@@ -34,7 +34,7 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=content_platform
 DB_USER=app_user
-DB_PASSWORD=app_password
+DB_PASSWORD=Hacker!@#123123
 PORT=3001
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 ```
@@ -103,7 +103,7 @@ mysql -u root -p
 CREATE DATABASE content_platform;
 
 -- Create user and grant privileges
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'app_password';
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'Hacker!@#123123';
 GRANT ALL PRIVILEGES ON content_platform.* TO 'app_user'@'localhost';
 FLUSH PRIVILEGES;
 
@@ -120,7 +120,7 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=content_platform
 DB_USER=app_user
-DB_PASSWORD=app_password
+DB_PASSWORD=Hacker!@#123123
 ```
 
 ### 4. Follow steps 2-5 from the Docker setup above
@@ -243,10 +243,10 @@ Set these environment variables in production:
 ```env
 DB_HOST=your-production-db-host
 DB_PORT=3306
-DB_NAME=content_platform_prod
+DB_NAME=content_platform
 DB_USER=your-production-user
-DB_PASSWORD=your-secure-production-password
-JWT_SECRET=your-super-secure-jwt-secret
+DB_PASSWORD=Hacker!@#123123
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 ```
 
 ### Security Considerations
