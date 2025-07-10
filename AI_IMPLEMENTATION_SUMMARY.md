@@ -166,8 +166,8 @@ Each content type has specialized prompts:
 Your `.env` file contains:
 ```env
 PORT=3001
-OPENAI_API_KEY=sk-proj-[YOUR_ACTUAL_KEY]
-JWT_SECRET=your-super-secret-jwt-key
+OPENAI_API_KEY=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
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 NODE_ENV=development
 ```
 

@@ -60,11 +60,11 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=content_platform
 DB_USER=app_user
-DB_PASSWORD=app_password
+DB_PASSWORD=Hacker!@#123123
 PORT=3001
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 NODE_ENV=development
-OPENAI_API_KEY=your-openai-api-key-here
+OPENAI_API_KEY=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
 ```
 
 ## 📁 Project Structure
