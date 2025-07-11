@@ -4,14 +4,30 @@ const { auth, optionalAuth } = require('../middleware/auth');
 const db = require('../database/mysql-db');
 const router = express.Router();
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI with error handling
+let openai = null;
+try {
+  if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.startsWith('sk-')) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  } else {
+    console.warn('⚠️  OpenAI API key not configured - AI features will be disabled');
+  }
+} catch (error) {
+  console.warn('⚠️  Failed to initialize OpenAI client:', error.message);
+}
 
 // Generate text content using OpenAI
 router.post('/generate-text', auth, async (req, res) => {
   try {
+    if (!openai) {
+      return res.status(503).json({ 
+        message: 'AI content generation is not available - OpenAI API key not configured',
+        error: 'service_unavailable'
+      });
+    }
+
     const { type, prompt, project_id, params = {} } = req.body;
 
     if (!prompt) {
@@ -111,6 +127,13 @@ router.post('/generate-text', auth, async (req, res) => {
 // Generate images using OpenAI DALL-E
 router.post('/generate-image', auth, async (req, res) => {
   try {
+    if (!openai) {
+      return res.status(503).json({ 
+        message: 'AI image generation is not available - OpenAI API key not configured',
+        error: 'service_unavailable'
+      });
+    }
+
     const { prompt, style = 'natural', project_id, params = {} } = req.body;
 
     if (!prompt) {
@@ -240,6 +263,13 @@ router.get('/templates', optionalAuth, (req, res) => {
 // Analyze content for SEO
 router.post('/analyze-seo', auth, async (req, res) => {
   try {
+    if (!openai) {
+      return res.status(503).json({ 
+        message: 'AI SEO analysis is not available - OpenAI API key not configured',
+        error: 'service_unavailable'
+      });
+    }
+
     const { content, target_keywords = [] } = req.body;
 
     if (!content) {
