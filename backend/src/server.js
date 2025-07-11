@@ -18,7 +18,7 @@ const workspaceRoutes = require('./routes/workspaces');
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Vite default port
+  origin: ['http://localhost:5173', 'http://localhost:8080'], // Support both Vite default and current port
   credentials: true
 }));
 app.use(express.json());
